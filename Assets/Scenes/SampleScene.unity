@@ -199,7 +199,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 142347088}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -2.7, y: -3.94, z: 29.347591}
+  m_LocalPosition: {x: -2.7, y: -4, z: 29.347591}
   m_LocalScale: {x: 0.1, y: 0.29889598, z: 1}
   m_Children: []
   m_Father: {fileID: 1597955292}
@@ -281,8 +281,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 326629409}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 3.4, y: -4.1, z: 29.347591}
-  m_LocalScale: {x: 12, y: 20, z: 0}
+  m_LocalPosition: {x: 3.4, y: -3.6634, z: 29.347591}
+  m_LocalScale: {x: 12, y: 20.94745, z: 0}
   m_Children: []
   m_Father: {fileID: 1597955292}
   m_RootOrder: 0
@@ -363,8 +363,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 388048101}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 9.5, y: -3.93, z: 29.347591}
-  m_LocalScale: {x: 0.1, y: 0.2989548, z: 1}
+  m_LocalPosition: {x: 9.5, y: -4.0101, z: 29.347591}
+  m_LocalScale: {x: 0.1, y: 0.30012074, z: 1}
   m_Children: []
   m_Father: {fileID: 1597955292}
   m_RootOrder: 1
@@ -422,7 +422,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 10.42
+  orthographic size: 10.541777
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -446,7 +446,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 519420028}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 5.32, y: 9.51, z: -29.347591}
+  m_LocalPosition: {x: 5.32, y: 9.88, z: -29.347591}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -497,12 +497,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Blocks:
   - {fileID: 4145921936593389651, guid: 73ac509621bd1344d8f2e599b8c73941, type: 3}
-  - {fileID: 6649861778558153821, guid: b3b08657d3796b1489a4daf5df5d51d7, type: 3}
-  - {fileID: 4157540460519582115, guid: c3b1a2ef70793524391ad4113a564a55, type: 3}
-  - {fileID: 9174139813594342621, guid: 29e3641acdeb27c458b858752c77c6a1, type: 3}
-  - {fileID: 1869484702725055096, guid: b37b5907f79ecfd4aa56f2f627ece684, type: 3}
-  - {fileID: 4805935264314733179, guid: cd87d783b1d2a0340b05e47470b3065d, type: 3}
-  - {fileID: 4560276151620873976, guid: 899c2312f426ca545adf7efcb38e0263, type: 3}
 --- !u!1 &1597955291
 GameObject:
   m_ObjectHideFlags: 0

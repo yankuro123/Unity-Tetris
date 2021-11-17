@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class BlockLogic : MonoBehaviour
 {
     //public float FallTime = 0.8f;
@@ -9,7 +10,8 @@ public class BlockLogic : MonoBehaviour
     public static int width = 12;
     public Vector3 RotationPoint;
     public Vector3 startingPoint;
-     
+    public SpriteRenderer Endgame;
+    public SpriteRenderer Flashing;
     
 
     private float PreviousTime;
@@ -138,5 +140,17 @@ public class BlockLogic : MonoBehaviour
         }
         return true;
     }
-
+    void EndGame()
+    {
+        foreach (Transform children in transform)
+        {
+            int roundedY = Mathf.RoundToInt(children.transform.position.y);
+            if (roundedY >= height)
+            {
+                Time.timeScale = 0;
+                Endgame.GetComponent<SpriteRenderer>().enabled = true;
+                Flashing.GetComponent<SpriteRenderer>().enabled = true;
+            }
+        }
+    }
 }
