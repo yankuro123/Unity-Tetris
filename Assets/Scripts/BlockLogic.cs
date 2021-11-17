@@ -9,9 +9,11 @@ public class BlockLogic : MonoBehaviour
     public static int width = 12;
     public Vector3 RotationPoint;
     public Vector3 startingPoint;
+     
     
 
     private float PreviousTime;
+    private static Transform[,] grid = new Transform[width, height];
 
     // Start is called before the first frame update
     void Start()
@@ -24,13 +26,13 @@ public class BlockLogic : MonoBehaviour
     {
         Debug.DrawLine(RotationPoint, startingPoint, Color.green );
 
-        if (Input.GetKey(KeyCode.LeftArrow))
+        if (Input.GetKeyDown(KeyCode.LeftArrow))
         {
             transform.position += new Vector3(-1, 0, 0);
             if (!ValidMove())
                 transform.position -= new Vector3(-1, 0, 0);
         }
-        else if (Input.GetKey(KeyCode.RightArrow))
+        else if (Input.GetKeyDown(KeyCode.RightArrow))
         {
             transform.position += new Vector3(1, 0, 0);
             if (!ValidMove())
@@ -48,11 +50,73 @@ public class BlockLogic : MonoBehaviour
             transform.position += new Vector3(0, -1, 0);
             PreviousTime = Time.time;
             if (!ValidMove())
+            {
                 transform.position -= new Vector3(0, -1, 0);
+                AddToGrid();
+                CheckForLines();
+                this.enabled = false;
+                FindObjectOfType<SpawnPoint>().NewBlocks();
+            }
+                
             PreviousTime = Time.time;
         }
     }
+    
+    void AddToGrid()
+    {
+        foreach (Transform children in transform)
+        {
+            int roundedX = Mathf.RoundToInt(children.transform.position.x);
+            int roundedY = Mathf.RoundToInt(children.transform.position.y);
 
+            grid[roundedX, roundedY] = children;
+        }
+    }
+    bool HasLine(int i)
+    {
+        for(int j = 0; j < width; j++)
+        {
+            if (grid[j, i] == null)
+                return false;
+        }
+        return true;
+    }
+    void DeleteLine(int i)
+    {
+        for (int j = 0; j < width; j++)
+        {
+            Destroy(grid[j, i].gameObject);
+            grid[j, i] = null; 
+        }
+    }
+    void RowDown(int i)
+    {
+        for(int y = i; y < height; y++)
+        {
+            for ( int j = 0; j < width; j++)
+            {
+                if (grid[j, y] != null)
+                {
+                    grid[j, y - 1] = grid[j, y];
+                    grid[j, y] = null;
+                    grid[j, y - 1].transform.position -= new Vector3(0, 1, 0);
+
+                }
+
+            }
+        }
+    }
+    void CheckForLines()
+    {
+        for(int i = height -1 ; i >= 0; i--)
+        {
+            if (HasLine(i))
+            {
+                DeleteLine(i);
+                RowDown(i);
+            }
+        }
+    }
     bool ValidMove()
     {
         foreach(Transform children in transform)
@@ -67,7 +131,10 @@ public class BlockLogic : MonoBehaviour
             {
                 Debug.Log("Checked return false");
                 return false;
-            }           
+            }
+            if(grid[roundedX, roundedY] != null){
+                return false;
+            }
         }
         return true;
     }
