@@ -377,3 +377,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   RotationPoint: {x: 0.5, y: 0.5, z: 0.5}
   startingPoint: {x: 0, y: 0, z: 0}
+  Txt: {fileID: 0}
+  Txt1: {fileID: 0}

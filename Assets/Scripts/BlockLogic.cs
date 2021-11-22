@@ -10,58 +10,66 @@ public class BlockLogic : MonoBehaviour
     public static int width = 12;
     public Vector3 RotationPoint;
     public Vector3 startingPoint;
-    public SpriteRenderer Endgame;
-    public SpriteRenderer Flashing;
-    
+    public static bool lost = false;
+    public SpriteRenderer Txt;
+    public SpriteRenderer Txt1;
 
     private float PreviousTime;
     private static Transform[,] grid = new Transform[width, height];
-
+    
     // Start is called before the first frame update
     void Start()
     {
-        
+        Txt = gameObject.GetComponent<SpriteRenderer>();
+        Txt1 = gameObject.GetComponent<SpriteRenderer>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        Debug.DrawLine(RotationPoint, startingPoint, Color.green );
-
-        if (Input.GetKeyDown(KeyCode.LeftArrow))
+        Debug.DrawLine(RotationPoint, startingPoint, Color.green);
+        if (lost == false)
         {
-            transform.position += new Vector3(-1, 0, 0);
-            if (!ValidMove())
-                transform.position -= new Vector3(-1, 0, 0);
-        }
-        else if (Input.GetKeyDown(KeyCode.RightArrow))
-        {
-            transform.position += new Vector3(1, 0, 0);
-            if (!ValidMove())
-                transform.position -= new Vector3(1, 0, 0);
-        }
-        else if (Input.GetKeyDown(KeyCode.UpArrow)){
-            transform.RotateAround(transform.TransformPoint(RotationPoint), new Vector3(0, 0, 1), 90);
-            if (!ValidMove()) {
-                transform.RotateAround(transform.TransformPoint(RotationPoint), new Vector3(0, 0, 1), -90);
-            }
-        }
-
-        if(Time.time - PreviousTime > (Input.GetKey(KeyCode.DownArrow) ? (0.8f/15.0f) : 0.8f))
-        {
-            transform.position += new Vector3(0, -1, 0);
-            PreviousTime = Time.time;
-            if (!ValidMove())
+            Txt.GetComponent<SpriteRenderer>().enabled = false;
+            Txt1.GetComponent<SpriteRenderer>().enabled = false;
+            if (Input.GetKeyDown(KeyCode.LeftArrow))
             {
-                transform.position -= new Vector3(0, -1, 0);
-                AddToGrid();
-                CheckForLines();
-                this.enabled = false;
-                FindObjectOfType<SpawnPoint>().NewBlocks();
+                transform.position += new Vector3(-1, 0, 0);
+                if (!ValidMove())
+                    transform.position -= new Vector3(-1, 0, 0);
             }
-                
-            PreviousTime = Time.time;
+            else if (Input.GetKeyDown(KeyCode.RightArrow))
+            {
+                transform.position += new Vector3(1, 0, 0);
+                if (!ValidMove())
+                    transform.position -= new Vector3(1, 0, 0);
+            }
+            else if (Input.GetKeyDown(KeyCode.UpArrow))
+            {
+                transform.RotateAround(transform.TransformPoint(RotationPoint), new Vector3(0, 0, 1), 90);
+                if (!ValidMove())
+                {
+                    transform.RotateAround(transform.TransformPoint(RotationPoint), new Vector3(0, 0, 1), -90);
+                }
+            }
+
+            if (Time.time - PreviousTime > (Input.GetKey(KeyCode.DownArrow) ? (0.8f / 15.0f) : 0.8f))
+            {
+                transform.position += new Vector3(0, -1, 0);
+                PreviousTime = Time.time;
+                if (!ValidMove())
+                {
+                    transform.position -= new Vector3(0, -1, 0);
+                    AddToGrid();
+                    CheckForLines();
+                    this.enabled = false;
+                    FindObjectOfType<SpawnPoint>().NewBlocks();
+                }
+
+                PreviousTime = Time.time;
+            }
         }
+        else return;
     }
     
     void AddToGrid()
@@ -119,7 +127,7 @@ public class BlockLogic : MonoBehaviour
             }
         }
     }
-    bool ValidMove()
+    bool  ValidMove()
     {
         foreach(Transform children in transform)
         {
@@ -127,9 +135,11 @@ public class BlockLogic : MonoBehaviour
             Debug.Log("X Rounded");
             int roundedY = Mathf.RoundToInt(children.transform.position.y);
             Debug.Log("Y Rounded");
-            /*float X = children.transform.position.x;
-            float Y = children.transform.position.y;*/
-            if (roundedX < 0 || roundedX >= width || roundedY < 0 ||  roundedY >= height)
+            if(roundedY >= height)
+            {
+                EndGame();
+            }
+            if (roundedX < 0 || roundedX >= width || roundedY < 0)
             {
                 Debug.Log("Checked return false");
                 return false;
@@ -142,15 +152,9 @@ public class BlockLogic : MonoBehaviour
     }
     void EndGame()
     {
-        foreach (Transform children in transform)
-        {
-            int roundedY = Mathf.RoundToInt(children.transform.position.y);
-            if (roundedY >= height)
-            {
-                Time.timeScale = 0;
-                Endgame.GetComponent<SpriteRenderer>().enabled = true;
-                Flashing.GetComponent<SpriteRenderer>().enabled = true;
-            }
-        }
+        Txt.GetComponent<SpriteRenderer>().enabled = true;
+        Txt1.GetComponent<SpriteRenderer>().enabled = true;
+        BlockLogic.lost = true;
     }
+
 }

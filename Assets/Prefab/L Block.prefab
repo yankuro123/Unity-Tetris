@@ -131,6 +131,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   RotationPoint: {x: 0, y: 0, z: 0}
   startingPoint: {x: 0, y: 0, z: 0}
+  Txt: {fileID: 0}
+  Txt1: {fileID: 0}
 --- !u!1 &6649861778825603235
 GameObject:
   m_ObjectHideFlags: 0
